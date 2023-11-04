@@ -32,6 +32,22 @@ class S3Service:
                 keys.append(content["Key"])
 
         return keys
+    
+    def search_standard(self, bucket, prefix):
+        paginator = self.s3_client.get_paginator('list_objects_v2')
+        operation_parameters = {'Bucket': bucket}
+        if prefix:
+            operation_parameters['Prefix'] = prefix
+        
+        standard_keys = []
+
+        # Use the paginator to go through pages of objects
+        for page in paginator.paginate(**operation_parameters):
+            for obj in page.get('Contents', []):
+                if obj['StorageClass'] == 'STANDARD':
+                    standard_keys.append(obj['Key'])
+
+        return standard_keys
 
     def write_binary(self, bucket, key, binary, metadata=None):
         logging.debug(f"About to write binary for key: [{key}] in bucket: [{bucket}] with metadata: {metadata}")
