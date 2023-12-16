@@ -16,13 +16,13 @@ def delete_all_objects(bucket_name):
     for page in pages:
         keys_to_delete = [{'Key': obj['Key']} for obj in page['Contents']]
         s3.delete_objects(Bucket=bucket_name, Delete={'Objects': keys_to_delete})
-        print(f'Deleted {page["KeyCount"]} objects')
+        # print(f'Deleted {page["KeyCount"]} objects')
         total_deleted = total_deleted + page["KeyCount"]
-        print(f'Total objects deleted: {total_deleted}')
+        print(f'Total objects deleted: {total_deleted}', end='\r')
 
 
 if __name__ == '__main__':
     args = parse_args()
     prefix = args.prefix
-    bucket_name = 'forecast-prod-us-east-1-benchmarklabs-partitioned'  # Replace with your S3 bucket name
+    bucket_name = 'forecast-prod-research-benchmarklabs-partitioned'  # Replace with your S3 bucket name
     delete_all_objects(bucket_name)

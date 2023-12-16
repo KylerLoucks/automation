@@ -2,7 +2,7 @@
 
 set -eux
 
-S3_BUCKET_NAME="bucket_name"
+S3_BUCKET_NAME="forecast-prod-us-east-1-benchmarklabs-partitioned"
 
 # --force removes non versioned objects before removing the bucket.
 # https://docs.aws.amazon.com/cli/latest/reference/s3/rb.html
